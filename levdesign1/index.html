@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <title>Plasma Gun</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+	<link rel="stylesheet" type="text/css" href="plasmagun.css">
+  </head>
+  <body>
+  	<canvas id=myCanvas width=500 height=500 ></canvas>
+	<textarea id=levelCode rows=20 cols=50 oninput="updateBoard()">	{
+    "content":[
+    {  "_init": "line",
+       "x1": 1,
+       "y1": 0,
+       "x2": 1,
+       "y2": 100,
+       "world": "white"
+    },
+
+    {  "_init": "line",
+       "x1": 99,
+       "y1": 0,
+       "x2": 99,
+       "y2": 100,
+       "world": "white"
+    },
+
+    {  "_init": "line",
+       "x1": 0,
+       "y1": 1,
+       "x2": 100,
+       "y2": 1,
+       "world": "white"
+    },
+
+    {  "_init": "line",
+       "x1": 0,
+       "y1": 99,
+       "x2": 100,
+       "y2": 99,
+       "world": "white"
+    },
+    {  "_init": "barrier",
+       "x1": 80,
+       "y1": 20,
+       "x2": 20,
+       "y2": 50,
+       "world": "blue"
+    },
+	{  "_init": "ball",
+       "x": 90,
+       "y": 90,
+       "vx": -50,
+       "vy": -10,
+       "world": "red"
+    }
+
+
+  ]
+}</textarea>
+<div id=parseStatus>none</div>
+<button onclick="start()">Start!</button>
+  </body>
+   
+  <script src="util.js"></script>  
+  <script src="game.js"></script>  
+  <script src="gamestatics.js"></script>  
+  <script src="ball.js"></script>  
+</html>
