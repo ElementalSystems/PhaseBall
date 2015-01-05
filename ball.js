@@ -11,9 +11,10 @@ function ball_init()
   
   null_init.bind(this)();   
   
-  if (this.world=="white") this.lineCol="#FFFFFF";
-  if (this.world=="red") this.lineCol="#C00";
-  if (this.world=="blue") this.lineCol="#00C";
+  this.lineCol=["#AAA","#555","#F00","#00F"];
+  
+  if (this.world=="red") this.lineCol=["#C00","#F00","#F55","#700"];
+  if (this.world=="blue") this.lineCol=["#00C","#00F","#55F","#007"];
 }
 
 function tickBall()
@@ -47,10 +48,10 @@ function bounceBall(hit)
 
 function drawBall()
 {
-  var rad=random(5,20);
+  var rad=random(2,10);
   
-  board.ctx.strokeStyle=this.lineCol;	  
-  board.ctx.lineWidth = 1;
+  board.ctx.strokeStyle=this.lineCol[board.frameNumber%this.lineCol.length];	  
+  board.ctx.lineWidth = 2;
   board.ctx.beginPath();
   //board.ctx.arc(this.x,this.y,rad,random(0,Math.PI*2),random(0,Math.PI*2),random(0,2)>1);
   board.ctx.arc(this.x,this.y,rad,0,Math.PI*2,true);

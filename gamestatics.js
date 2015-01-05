@@ -19,15 +19,16 @@ function line_init()
   
   
   null_init.bind(this)();   
-  if (this.world=="white") this.lineCol="#FFFFFF";
-  if (this.world=="red") this.lineCol="#C00";
-  if (this.world=="blue") this.lineCol="#00C";
+  
+  this.lineCol=["#555","#000","#F00","#00F"];
+  if (this.world=="red") this.lineCol=["#C00","#F00","#F55","#700"];
+  if (this.world=="blue") this.lineCol=["#00C","#00F","#55F","#007"];
 }
 
 
 function drawLine()
 {
-  board.ctx.strokeStyle=this.lineCol;	  
+  board.ctx.strokeStyle=this.lineCol[0];	  
   board.ctx.lineWidth = this.lineWidth;
   board.ctx.beginPath();
   board.ctx.moveTo(this.x1,this.y1);
@@ -93,7 +94,7 @@ function barrier_init()
   
 function drawBarrier()
 {
-  board.ctx.strokeStyle=this.lineCol;	  
+  board.ctx.strokeStyle=this.lineCol[board.frameNumber%this.lineCol.length];
   board.ctx.lineWidth = this.lineWidth;
   board.ctx.beginPath();
   board.ctx.moveTo(this.x1+random(-this.lineBlur,+this.lineBlur),this.y1+random(-this.lineBlur,+this.lineBlur));

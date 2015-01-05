@@ -70,3 +70,14 @@
 	  if (result.length==0) return null;
 	  return result;
    }
+   
+   function fireGun()
+   {
+     var ball={ x:98, y:98 };
+	 var spd=Number(document.getElementById('speedctl').value);
+	 var ang=Number(document.getElementById('anglectl').value)*Math.PI/180;
+	 ball.vx=-spd*Math.cos(ang);
+	 ball.vy=-spd*Math.sin(ang);
+	 ball_init.bind(ball)();
+	 board.content.push(ball);	 	 
+   }
