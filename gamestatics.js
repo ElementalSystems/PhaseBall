@@ -7,6 +7,21 @@ function null_init()
   if (!this.checkHit) this.checkHit=function(x1,y1,x2,y2){ return null; };
 }
 
+
+function createLine(nx1,ny1,nx2,ny2,nworld)
+{
+  var n={
+    x1: nx1,
+	y1: ny1,
+	x2: nx2,
+	y2: ny2,
+	world: nworld,
+	_init: line_init
+  };
+  n._init();
+  return n;
+}
+
 function line_init()
 { 
   this.draw=drawLine;	
@@ -20,9 +35,9 @@ function line_init()
   
   null_init.bind(this)();   
   
-  this.lineCol=["#555","#000","#F00","#00F"];
-  if (this.world=="red") this.lineCol=["#C00","#F00","#F55","#700"];
-  if (this.world=="blue") this.lineCol=["#00C","#00F","#55F","#007"];
+  this.lineCol=["#CCC","#FFF","#888"];
+  if (this.world=="red") this.lineCol=["#C30","#F30","#FF8","#FF0"];
+  if (this.world=="blue") this.lineCol=["#00C","#00F","#5FF","#0FF"];
 }
 
 
@@ -85,8 +100,8 @@ function checkHitLine(ax,ay,bx,by)
 
 function barrier_init()
 {
-   if (!this.lineWidth) this.lineWidth=1;
-   if (!this.lineBlur) this.lineBlur=3;	   
+   if (!this.lineWidth) this.lineWidth=1.5;
+   if (!this.lineBlur) this.lineBlur=2;	   
    line_init.bind(this)();
    this.draw=drawBarrier;
 }

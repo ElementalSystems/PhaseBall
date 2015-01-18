@@ -8,51 +8,35 @@
     <div id=playarea>
 	<div id=boardarea>
 	<div id=overlay></div>	
+  	<img src="image/gun.png" id=gun>
   	<div id=gamecanvasframe>
-	<canvas id=gamecanvas></canvas>
+	<canvas id=gamecanvas onmousedown="aimDown(event)" onmouseup="aimUp(event)"  onmousemove="aimDrag(event)" onmouseout="aimUp(event)"></canvas>
 	</div>
 	</div>
 <div id=ctlarea>
+<div id=ammodisplay>
+<div id=ammoslider>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+</div>
+</div>
 Speed: <input type="text" id=speedctl size="4" value="30">
-Angle: <input type="text" id=anglectl size="4" value="50">
-<button onclick="fireGun()">Fire!</button>
-	
+<img onclick="fireGun()" id=firebutton src="image/firebutton.png">	
+<img id=spdneedle src="image/needle.png">	
+
 </div>
 </div>
 <div id=editor>
 	<textarea id=levelCode rows=20 cols=50 oninput="updateBoard()">		{
+	  "balls" :[ "r","r","w","w","b" ],
     "content":[
-    {  "_init": "line",
-       "x1": 1,
-       "y1": 0,
-       "x2": 1,
-       "y2": 100,
-       "world": "white"
-    },
-
-    {  "_init": "line",
-       "x1": 99,
-       "y1": 0,
-       "x2": 99,
-       "y2": 100,
-       "world": "white"
-    },
-
-    {  "_init": "line",
-       "x1": 0,
-       "y1": 1,
-       "x2": 100,
-       "y2": 1,
-       "world": "white"
-    },
-
-    {  "_init": "line",
-       "x1": 0,
-       "y1": 99,
-       "x2": 100,
-       "y2": 99,
-       "world": "white"
-    },
     {  "_init": "barrier",
        "x1": 80,
        "y1": 20,

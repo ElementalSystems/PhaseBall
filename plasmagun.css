@@ -3,9 +3,15 @@ img.resource
   display:none;
 }
 
+body
+{
+background: #000;
+}
+
 #playarea
 {
   float:left;
+  height: 100%;
 }
 
 #overlay
@@ -17,13 +23,25 @@ img.resource
   width:100%;
   height:100%;
   z-index: 100;
+  pointer-events: none;
 }
 
 #boardarea
 {
-  width:600px;
-  height:600px;
+  width:500px;
+  height:500px;
   position: relative;
+}
+
+#gun
+{
+  position:absolute;
+  z-index: 2000;
+  width:40%;
+  height:20%;
+  bottom: 40px;
+  right: 40px;
+  pointer-events: none;
 }
 
 #gamecanvasframe
@@ -36,5 +54,59 @@ img.resource
 #gamecanvas
 {
    width:  100%;
+}
+
+#ctlarea
+{
+  height: 140px;
+  position: relative;
+  background-image: url("image/ctlframe.png");
+  background-size: 100% 100%;
+}
+
+#firebutton {
+  height:120%;
+  position: absolute;
+  bottom:0;
+  right:0;
+}
+
+#spdneedle {
+  height:180%;
+  position: absolute;
+  bottom:0;
+  right:0;
+  transform: translate(50%,50%) rotate(-15deg);  
+}
+
+#ammodisplay
+{
+  position: relative;
+  width: 50%;
+  height: 60%;  
+  margin-left:5%;
+  overflow: hidden;  
+}
+
+#ammoslider
+{
+  position: relative;
+  width: 250%;
+  height: 100%;      
+  background: #000;
+}
+
+
+.ammoframe
+{
+  height: 100%;  
+  background: #C00;
+  position: relative;
+  float:right;
+}
+
+.ammoframe img
+{
+  height: 100%;  
   
 }

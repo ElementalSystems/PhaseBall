@@ -3,6 +3,26 @@
      return min+(max-min)*Math.random();
    }
    
+   function cycleRange(start,end,counter,duration)
+   {
+     return start+((end-start)*(counter%duration)/duration);
+   }
+   
+   function pingPongRange(start,end,counter,duration)
+   {
+     var v=(counter%duration);
+	 if (v>(duration/2)) 
+	    return cycleRange(end,start,counter,duration/2);
+	 else 	 
+        return cycleRange(start,end,counter,duration/2);
+   }
+   
+   
+   function cycleArray(counter,duration,arr)
+   {
+     var v=cycleRange(0,arr.length,counter,duration);
+	 return arr[Math.floor(v)];
+   }
    
    /*
        Does a JSON.Parse with a single extra useful functionality:
@@ -18,7 +38,10 @@
 				return eval(value+'_init');
 			 }
 			 if (typeof value == 'object') 
-			   if (value._init) value._init();
+			   if (value._init) {
+  			     value._init();
+				 value._init=null;
+			   }
 			 
 			 return value;
 		   });
