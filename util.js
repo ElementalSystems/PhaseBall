@@ -73,3 +73,13 @@
     return { x: x-xPosition, y: y-yPosition };
    }
    
+   //returns a keyed list of parameters from the URL
+   //usage : on www.elementalsystems.co.za?editor=yes&fullscreen=n getURLVars()["editor"] returns "yes"
+   function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,    
+    function(m,key,value) {
+      vars[key] = value;
+    });
+    return vars;
+  }
