@@ -1,0 +1,326 @@
+<html>
+  <head>
+    <title>Phase Ball</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+	<link rel="stylesheet" type="text/css" href="plasmagun.css">
+  </head>
+  <body onload="start()">
+  
+<div id=editor>
+	<textarea id=levelCode rows=20 cols=50 oninput="fitBoard()">	{
+	  "balls" :[ "r","r","w","w","b" ],
+    "content":[
+    {  "_init": "barrier",
+       "x1": 80,
+       "y1": 20,
+       "x2": 60,
+       "y2": 40,
+       "world": "blue"
+    },
+    {  "_init": "barrier",
+       "x1": 20,
+       "y1": 20,
+       "x2": 40,
+       "y2": 40,
+       "world": "blue"
+    },
+{  "_init": "barrier",
+       "x1": 40,
+       "y1": 60,
+       "x2": 60,
+       "y2": 60,
+       "world": "white"
+    },
+	{  "_init": "target",
+       "x": 10,
+       "y": 30,
+       "vx": -50,
+       "vy": -10,
+       "world": "red"
+    },
+    {  "_init": "target",
+       "x": 30,
+       "y": 10,
+       "vx": -50,
+       "vy": -10,
+       "world": "white"
+    }
+
+
+  ]
+}	</textarea>
+<div id=parseStatus>none</div>
+</div>
+	<div id=wholespace>
+	<div id=playarea>
+	<div id=boardarea>
+	<div id=overlay></div>	
+	<img src="image/gun.png" id=gun>
+	<div id=gamecanvasframe>
+	<canvas id=gamecanvas onmousedown="aimDown(event)" onmouseup="aimUp(event)"  onmousemove="aimDrag(event)" onmouseout="aimUp(event)"></canvas>
+	</div>
+	</div>
+<div id=ctlarea>
+<div id=ammodisplay>
+<div id=ammoslider>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+<div class=ammoframe><img src="image/ammocover.png"></div>
+</div>
+</div>
+<img onclick="fireGun()" id=firebutton src="image/firebutton.png">	
+<img id=spddial src="image/spddial.png" onmousedown="spdDown(event)" onmouseup="spdUp(event)"  onmousemove="spdDrag(event)" onmouseout="spdUp(event)">	
+<img id=spdneedle src="image/needle.png">	
+</div>
+</div>
+</div>
+	
+<img src="image/back1.jpg" class=resource id=backdrop> 
+
+<div id=lev1 class=leveldef>
+	{
+	  "balls" :[ "w","w","w","w","w","w","w" ],
+    "content":[
+    {  "_init": "barrier",
+       "x1": 60,
+       "y1": 20,
+       "x2": 60,
+       "y2": 40,
+       "world": "white"
+    },
+    {  "_init": "barrier",
+       "x1": 20,
+       "y1": 40,
+       "x2": 60,
+       "y2": 40,
+       "world": "white"
+    },
+	{  "_init": "target",
+       "x": 40,
+       "y": 60,
+       "world": "blue"
+    },
+    {  "_init": "target",
+       "x": 30,
+       "y": 10,
+       "world": "blue"
+    }, {  "_init": "target",
+       "x": 80,
+       "y": 50,
+       "world": "blue"
+    },
+ {  "_init": "target",
+       "x": 20,
+       "y": 80,
+       "world": "blue"
+    }
+
+
+
+  ]
+}	
+</div>
+
+<div id=lev2 class=leveldef>
+	{
+	  "balls" :[ "w","w","w","w","w","w","w" ],
+    "content":[
+    {  "_init": "barrier",
+       "x1": 60,
+       "y1": 20,
+       "x2": 60,
+       "y2": 60,
+       "world": "white"
+    },
+    {  "_init": "barrier",
+       "x1": 40,
+       "y1": 20,
+       "x2": 40,
+       "y2": 60,
+       "world": "white"
+    },
+
+    {  "_init": "barrier",
+       "x1": 40,
+       "y1": 80,
+       "x2": 60,
+       "y2": 60,
+       "world": "white"
+    },
+
+   {"_init": "barrier",
+       "x1": 60,
+       "y1": 0,
+       "x2": 40,
+       "y2": 20,
+       "world": "white"
+    },
+	{  "_init": "target",
+       "x": 80,
+       "y": 60,
+       "world": "red"
+    },
+    {  "_init": "target",
+       "x": 50,
+       "y": 50,
+       "world": "red"
+    }, {  "_init": "target",
+       "x": 50,
+       "y": 30,
+       "world": "red"
+    },
+ {  "_init": "target",
+       "x": 20,
+       "y": 70,
+       "world": "red"
+    }
+
+
+
+  ]
+}	
+</div>
+<div id=lev3 class=leveldef>
+	{
+	  "balls" :[ "b","r","b","r","b","r"],
+    "content":[
+	{  "_init": "target",
+       "x": 20,
+       "y": 30,
+       "world": "red"
+    },
+    {  "_init": "target",
+       "x": 82,
+       "y": 35,
+       "world": "red"
+    }, {  "_init": "target",
+       "x": 50,
+       "y": 30,
+       "world": "blue"
+    },
+ {  "_init": "target",
+       "x": 50,
+       "y": 70,
+       "world": "blue"
+    }
+  ]
+}	
+</div>
+<div id=lev4 class=leveldef>
+	{
+	  "balls" :[ "r","b","w","r","b","w","r","b","w" ],
+    "content":[
+    {  "_init": "barrier",
+       "x1": 20,
+       "y1": 20,
+       "x2": 60,
+       "y2": 20,
+       "world": "blue"
+    },
+    {  "_init": "barrier",
+       "x1": 20,
+       "y1": 20,
+       "x2": 20,
+       "y2": 60,
+       "world": "blue"
+    },
+{  "_init": "barrier",
+       "x1": 60,
+       "y1": 60,
+       "x2": 20,
+       "y2": 60,
+       "world": "red"
+    },
+{  "_init": "barrier",
+       "x1": 60,
+       "y1": 20,
+       "x2": 60,
+       "y2": 60,
+       "world": "red"
+    },
+	{  "_init": "target",
+       "x": 50,
+       "y": 30,
+       "world": "red"
+    },
+    {  "_init": "target",
+       "x": 30,
+       "y": 50,
+       "world": "red"
+    }
+,	{  "_init": "target",
+       "x": 10,
+       "y": 30,
+       "world": "blue"
+    },
+    {  "_init": "target",
+       "x": 30,
+       "y": 10,
+       "world": "blue"
+    }
+
+
+  ]
+}	
+</div>
+<div id=lev5 class=leveldef>
+	{
+	  "balls" :[ "brb","brb","brb","brb","brb","brb"],
+    "content":[
+    {  "_init": "barrier",
+       "x1": 0,
+       "y1": 60,
+       "x2": 60,
+       "y2": 0,
+       "world": "blue"
+    },
+    {  "_init": "barrier",
+       "x1": 0,
+       "y1": 100,
+       "x2": 100,
+       "y2": 0,
+       "world": "red"
+    },
+	{  "_init": "target",
+       "x": 40,
+       "y": 40,
+       "world": "white"
+    },
+ 	{  "_init": "target",
+       "x": 10,
+       "y": 30,
+       "world": "white"
+    },
+    {  "_init": "target",
+       "x": 30,
+       "y": 10,
+       "world": "white"
+    }
+
+
+  ]
+}	
+</div>
+<div id=lev6 class=leveldef>
+</div>
+
+
+  </body>
+   
+  <script src="util.js"></script>  
+  <script src="game.js"></script>  
+  <script src="control.js"></script>  
+  <script src="controls.js"></script>  
+  <script src="gamestatics.js"></script>  
+  <script src="ball.js"></script>  
+  <script src="target.js"></script>  
+</html>

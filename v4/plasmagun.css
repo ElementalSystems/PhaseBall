@@ -1,0 +1,139 @@
+img.resource
+{
+  display:none;
+}
+
+body
+{
+background: #000;
+}
+#wholespace
+{
+  width:100%;
+  height: 100%;
+}
+#playarea
+{
+  margin-left:auto;
+  margin-right:auto;
+  width: 200px;
+  height: 100%;
+}
+
+#overlay
+{
+  position: absolute;
+  background-image: url("image/frame.png");
+  background-color: rgba(0,0,0,.05);
+  background-size: 100% 100%;
+  width:100%;
+  height:100%;
+  z-index: 100;
+  pointer-events: none;
+}
+
+#boardarea
+{
+  width:100%;
+  height:200px;
+  position: relative;
+}
+
+#gun
+{
+  position:absolute;
+  z-index: 2000;
+  width:40%;
+  height:20%;
+  bottom: 40px;
+  right: 40px;
+  pointer-events: none;
+}
+
+#gamecanvasframe
+{
+  z-index: 1;
+  position:relative;
+  padding: 40px;
+  
+}
+#gamecanvas
+{
+   width:  100%;
+}
+
+#ctlarea
+{
+  height: 18%;
+  position: relative;
+  background-image: url("image/ctlframe.png");
+  background-size: 100% 100%;
+  overflow:hidden;
+}
+
+#firebutton {
+  height: 60%;
+  position: absolute;
+  bottom:-8%;
+  right:-3%;
+  z-index:1000;
+}
+
+
+#spddial {
+  height:120%;
+  position: absolute;
+  bottom:0;
+  right:0;
+}
+
+#spdneedle {
+  height:20%;
+  position: absolute;
+  bottom:0;
+  right:0;
+  pointer-events: none;  
+}
+
+#ammodisplay
+{
+  position: relative;
+  width: 50%;
+  height: 60%;  
+  margin-left:5%;
+  overflow: hidden;  
+}
+
+#ammoslider
+{
+  position: relative;
+  width: 250%;
+  height: 100%;      
+  background: #000;
+}
+
+#editor {
+float:right;
+background: #ccf;
+display: none;
+}
+
+.ammoframe
+{
+  height: 90%;  
+  width: 7%;
+  background: #C00;
+  position: relative;
+  float:right;
+}
+
+.ammoframe img
+{
+  height: 100%;  
+  width: 100%;
+  display: inline;  
+}
+
+.leveldef {
+  display:none;
+}
