@@ -7,9 +7,18 @@
    
    function fitBoard()
    {
+	   setElementClass(document.getElementById('hinttext'),'hidden');	  
+ 	
 	   var size=window.innerWidth; //the etire width
 	   var height=window.innerHeight*4/5; //and 80% of thr height
 	   if (size>height) size=height; //take the lesser of the two
+	   
+	   document.getElementById('playarea').style.width=size+'px';
+	   document.getElementById('boardarea').style.height=size+'px';	   
+	   document.getElementById('ctlarea').style.height=(window.innerHeight-size)+'px';	   
+	   document.getElementById('levelselector').style.width=size+'px';	   
+	   document.getElementById('levelselector').style.left=((window.innerWidth-size)/2)+'px';	   
+	   document.getElementById('titlelogo').style.right=(size+(window.innerWidth-size)/2)+'px';	   
 	   
 	   
 	   var edit=getUrlVars()["edit"];
@@ -18,17 +27,17 @@
 	   if (edit) {
 	     document.getElementById("editor").style.display = "block";
 		 content=document.getElementById("levelCode").value;
-	   }	   
-	   if (play) {
+		 updateBoard(content);
+	   } else if (play) {
 	     content=document.getElementById(play).innerHTML;
-	   }	   
-	   document.getElementById('playarea').style.width=size+'px';
-	   document.getElementById('boardarea').style.height=size+'px';	   
-	   updateBoard(content);
+		 updateBoard(content);
+	   } 
+       
    }
    
    function updateBoard(content)
    {
+	setElementClass(document.getElementById('levelselector'),'hidden');	  
  	var c = document.getElementById("gamecanvas");
 	canvasSize=c.offsetWidth;
 	c.width=canvasSize;
@@ -64,6 +73,8 @@
 	setUpAmmoBelt();
 	aimGunAt(0,0);
 	spdAt(0,0);
+	board.hinttext=document.getElementById('hinttext');	
+	fireHintEvent("start");
    }
    
    function start()
@@ -97,8 +108,6 @@
 	  for (var i=0;i<board.killList.length;i+=1) 
 	    board.content.splice(board.content.indexOf(board.killList[i]), 1);	  
       
-	  
-	
 	  //now do the redraw
 	  board.ctx.fillStyle = '#CC5';
 	  board.ctx.globalAlpha=.2;
@@ -142,9 +151,11 @@
 	 ball.vy=-board.fireSpd*Math.sin(board.fireAngle);
 	 ball_init.bind(ball)();
 	 board.content.push(ball);	 	 
+	 fireHintEvent("fire");
 	 
 	 board.ammoIndex+=1;
 	 moveAmmoBelt();
+	 
    }
    
    

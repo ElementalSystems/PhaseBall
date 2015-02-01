@@ -1,22 +1,27 @@
    
    function aimDown(e)
-   {     
-	   var pos=getEventPosFromElement(board.canvas,e);
-	   
+   {  
+       if (!board) return;   
+	   var pos=getEventPosFromElement(board.canvas,e);	   
 	   board.aimDragging=true;
        aimGunAt(pos.x,pos.y);
+       fireHintEvent("aim");	  
    }
    
    
    function aimUp(e)
    {
+	 if (!board) return;
      board.aimDragging=false;
    }
    
    function aimDrag(e)
    {
-      if  (board.aimDragging)
-	    aimDown(e);	  
+	  if (!board) return;
+      if  (board.aimDragging) {
+	   var pos=getEventPosFromElement(board.canvas,e);
+	   aimGunAt(pos.x,pos.y);
+	  }
    }
    
    function aimGunAt(x,y)
@@ -69,6 +74,7 @@
 	   var pos=getEventPosFromElement(board.spddial,e);
 	   board.spdDragging=true;
        spdAt(pos.x,pos.y);
+	   fireHintEvent("speed");
 	   return false;
    }
    
@@ -81,8 +87,10 @@
    
    function spdDrag(e)
    {
-      if  (board.spdDragging)
-	    spdDown(e);
+      if  (board.spdDragging) {
+	    var pos=getEventPosFromElement(board.spddial,e);
+	    spdAt(pos.x,pos.y);	   
+	  }
       return false;		
    }
    

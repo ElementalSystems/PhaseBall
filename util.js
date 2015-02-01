@@ -83,3 +83,15 @@
     });
     return vars;
   }
+  
+  function setElementClass(e,cls)
+  {
+	  if (!e.classList.contains(cls))
+		  e.classList.add(cls);
+  }
+  
+  function unsetElementClass(e,cls)
+  {
+	  if (e.classList.contains(cls))
+		  e.classList.remove(cls);
+  }

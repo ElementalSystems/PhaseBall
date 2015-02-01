@@ -5,7 +5,9 @@ function null_init()
   if (!this.draw) this.draw=function(){};
   if (!this.tick) this.tick=function(){};
   if (!this.checkHit) this.checkHit=function(x1,y1,x2,y2){ return null; };
+  
 }
+
 
 
 function createLine(nx1,ny1,nx2,ny2,nworld)
@@ -30,6 +32,7 @@ function line_init()
   this.x2*=canvasSize/100.0;
   this.y1*=canvasSize/100.0;
   this.y2*=canvasSize/100.0;
+  this.active=true;
   if (!this.lineWidth) this.lineWidth=5;
   
   
@@ -43,6 +46,7 @@ function line_init()
 
 function drawLine()
 {
+  if (!this.active) return;  
   board.ctx.strokeStyle=this.lineCol[0];	  
   board.ctx.lineWidth = this.lineWidth;
   board.ctx.beginPath();
@@ -53,6 +57,7 @@ function drawLine()
 
 function checkHitLine(ax,ay,bx,by)
 {
+  if (!this.active) return null;
   //check if the given line hits us
   var cx=this.x1;
   var cy=this.y1;
@@ -104,11 +109,16 @@ function barrier_init()
    if (!this.lineBlur) this.lineBlur=2;	   
    line_init.bind(this)();
    this.draw=drawBarrier;
+   this.tick=tickBarrier;
+   if (this.flashpattern) 
+     this.nextPattern=0;   
+   
 }
   
   
 function drawBarrier()
 {
+  if (!this.active) return;
   board.ctx.strokeStyle=this.lineCol[board.frameNumber%this.lineCol.length];
   board.ctx.lineWidth = this.lineWidth;
   board.ctx.beginPath();
@@ -121,4 +131,20 @@ function drawBarrier()
   
   board.ctx.quadraticCurveTo(xcp,ycp,this.x2+random(-this.lineBlur,+this.lineBlur),this.y2+random(-this.lineBlur,+this.lineBlur));
   board.ctx.stroke();	  
+}
+
+function tickBarrier()
+{
+	if ((this.flashpattern)&&(board.worldTime>this.nextPattern)) {
+		if (this.nextPattern==0) this.nextPattern=board.worldTime+this.flashpattern.offset+this.flashpattern.on;
+		else {
+			if (this.active) {
+				this.active=false;
+				this.nextPattern=board.worldTime+this.flashpattern.off;
+			} else {
+				this.active=true;
+				this.nextPattern=board.worldTime+this.flashpattern.on;
+			}  						
+		}		
+	}	
 }
