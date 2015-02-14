@@ -58,6 +58,11 @@ function tickBall()
 	   } else if (hits[i].type=='targethit') {
 	     updatePos=true;
 		 board.killList.push(hits[i].targetObject);
+		 board.targetHit+=1;
+		 if (board.targetHit==board.targetCount) {
+			 board.ammoIndex+=1;
+			 board.ended=true;
+		 }
 		 fireHintEvent('targethit');
 	   }	   
 	 };

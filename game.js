@@ -4,11 +4,29 @@
    var maxFireSpd=80;
    var ballSize=10;
    var board=null;
+   var levNumber=9;
+   var editMode=0;
+   
+   
+   function start()
+   {
+	  fitBoard();
+	  setElementClass(document.getElementById('hinttext'),'hidden');	  
+ 	
+	   var edit=getUrlVars()["edit"];
+	   if (edit) {
+		 editMode=1;
+	     document.getElementById("editor").style.display = "block";
+		 content=document.getElementById("levelCode").value;
+		 updateBoard(content);
+	   }
+	   
+      window.requestAnimationFrame(gameTick);	
+   }
    
    function fitBoard()
    {
-	   setElementClass(document.getElementById('hinttext'),'hidden');	  
- 	
+	   
 	   var size=window.innerWidth; //the etire width
 	   var height=window.innerHeight*4/5; //and 80% of thr height
 	   if (size>height) size=height; //take the lesser of the two
@@ -18,26 +36,43 @@
 	   document.getElementById('ctlarea').style.height=(window.innerHeight-size)+'px';	   
 	   document.getElementById('levelselector').style.width=size+'px';	   
 	   document.getElementById('levelselector').style.left=((window.innerWidth-size)/2)+'px';	   
-	   document.getElementById('titlelogo').style.right=(size+(window.innerWidth-size)/2)+'px';	   
-	   
-	   
-	   var edit=getUrlVars()["edit"];
-	   var play=getUrlVars()["play"];
-	   var content;
-	   if (edit) {
-	     document.getElementById("editor").style.display = "block";
-		 content=document.getElementById("levelCode").value;
-		 updateBoard(content);
-	   } else if (play) {
-	     content=document.getElementById(play).innerHTML;
-		 updateBoard(content);
-	   } 
-       
+	   document.getElementById('gamesummary').style.width=size+'px';	   
+	   document.getElementById('gamesummary').style.left=((window.innerWidth-size)/2)+'px';	   
+	   document.getElementById('titlelogo').style.right=(size+(window.innerWidth-size)/2)+'px';	   	
+   }
+   
+   function startLevel(levN)
+   {
+	  levNumber=levN;
+      content=document.getElementById('lev'+levNumber).innerHTML;
+	  if (editMode) 
+		  document.getElementById("levelCode").innerHTML=content;	  
+	  updateBoard(content);   
+   }
+   
+   function editorUpdate()
+   {
+	  var content=document.getElementById("levelCode").value;	  
+	  updateBoard(content);   
+   }
+   
+   function showChapter(num)
+   {
+	   setElementClass(document.getElementById('gamesummary'),'hidden');	  
+ 	   unsetElementClass(document.getElementById('chapter0'),'active');
+	   unsetElementClass(document.getElementById('chapter1'),'active');
+	   unsetElementClass(document.getElementById('chapter2'),'active');
+	   //unsetElementClass(document.getElementById('chapter3'),'active');
+	   //unsetElementClass(document.getElementById('chapter4'),'active');
+	   setElementClass(document.getElementById('chapter'+num),'active');	   
+	   unsetElementClass(document.getElementById('levelselector'),'hidden');	  
+ 	   
    }
    
    function updateBoard(content)
    {
 	setElementClass(document.getElementById('levelselector'),'hidden');	  
+ 	setElementClass(document.getElementById('gamesummary'),'hidden');	  
  	var c = document.getElementById("gamecanvas");
 	canvasSize=c.offsetWidth;
 	c.width=canvasSize;
@@ -70,18 +105,18 @@
 	board.spdneedle=document.getElementById('spdneedle');	
 	board.ammoDisplay=document.getElementById("ammodisplay");
 	board.ammoTiles=board.ammoDisplay.getElementsByClassName("ammoframe");
+	board.fireButton=document.getElementById("firebutton");
+	unsetElementClass(board.fireButton,'inprogress');	 	    
+	board.targetCount=0;
+	for (var i=0;i<board.content.length;i+=1) 
+		if (board.content[i].targetCount)
+           board.targetCount+=board.content[i].targetCount;
 	setUpAmmoBelt();
 	aimGunAt(0,0);
 	spdAt(0,0);
+	board.targetHit=0;
 	board.hinttext=document.getElementById('hinttext');	
 	fireHintEvent("start");
-   }
-   
-   function start()
-   {
-	  fitBoard();
-      window.requestAnimationFrame(gameTick);
-	
    }
    
    function gameTick(timestamp) 
@@ -118,10 +153,38 @@
 	  for (var i=0;i<board.content.length;i+=1) {
 	    board.content[i].draw();
 	  }	
-	
+	  if (board.ended) {
+		showGameSummary();	  
+		board=null;
+	  }
 	}
-	window.requestAnimationFrame(gameTick);
-   }
+	window.requestAnimationFrame(gameTick);   
+}
+
+function showGameSummary()
+{
+	unsetElementClass(document.getElementById('gamesummary'),'hidden');
+	if (board.targetCount==board.targetHit)
+	  document.getElementById('gs_result').innerHTML='Complete: '+board.ammoIndex+' Ball(s)';
+    else
+	  document.getElementById('gs_result').innerHTML='Failed. Try Again.';
+  
+    var medal='none';
+	var next='Use '+board.medals[2]+' ball(s) for a Bronze Medal';
+    if (board.ammoIndex<=board.medals[0]) {
+		medal='Gold';
+		next='';
+	} else if (board.ammoIndex<=board.medals[1]) {
+		medal='Silver';
+		next='Use '+board.medals[0]+' ball(s) for a Gold Medal';
+	} else if (board.ammoIndex<=board.medals[2]){
+		medal='Bronze';
+		next='Use '+board.medals[1]+' ball(s) for a Silver Medal';
+	}
+	
+	document.getElementById('gs_medal').innerHTML='Medal: '+medal;
+	document.getElementById('gs_nexttarget').innerHTML=next;			
+}
    
    function checkHits(x1,y1,x2,y2,world)
    {
@@ -151,11 +214,25 @@
 	 ball.vy=-board.fireSpd*Math.sin(board.fireAngle);
 	 ball_init.bind(ball)();
 	 board.content.push(ball);	 	 
-	 fireHintEvent("fire");
+	 //Start the ammo fire
+	 setElementClass(board.ammoTiles[board.ammoIndex],'fired');
+	 setElementClass(board.fireButton,'inprogress');
+	 	 
+	 fireHintEvent("fire");	 
 	 
-	 board.ammoIndex+=1;
-	 moveAmmoBelt();
-	 
+	 //in 5 seconds move up the belt
+	 setTimeout(
+	   function() {
+		  if (board) {
+	        setElementClass(board.ammoTiles[board.ammoIndex],'eject');
+	        unsetElementClass(board.fireButton,'inprogress');
+	 	    board.ammoIndex+=1;
+		    if (board.ammoIndex==board.balls.length) board.ended=true;
+			fireHintEvent("firecomplete");		 
+		  }
+          
+	   },
+	   board.ballLifeTime);	 
    }
    
    

@@ -54,7 +54,10 @@
    {
     var x;
 	var y;
-	if (e.pageX || e.pageY) { 
+	if (e.touches) {
+	  x = e.touches[0].pageX;
+	  y = e.touches[0].pageY;		
+	} else if (e.pageX || e.pageY) { 
 	 x = e.pageX;
 	 y = e.pageY;  
 	} else { 

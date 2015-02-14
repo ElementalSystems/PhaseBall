@@ -13,6 +13,7 @@ function target_init()
   this.lineCol=["#CCC","#FFF","#888"];
   if (this.world=="red") this.lineCol=["#C30","#F30","#FF8","#FF0"];
   if (this.world=="blue") this.lineCol=["#00C","#00F","#5FF","#0FF"];
+  this.targetCount=1;
 }
 
 

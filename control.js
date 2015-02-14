@@ -1,6 +1,7 @@
    
    function aimDown(e)
    {  
+       e.preventDefault();
        if (!board) return;   
 	   var pos=getEventPosFromElement(board.canvas,e);	   
 	   board.aimDragging=true;
@@ -11,12 +12,14 @@
    
    function aimUp(e)
    {
+	 e.preventDefault();       
 	 if (!board) return;
      board.aimDragging=false;
    }
    
    function aimDrag(e)
    {
+	  e.preventDefault();
 	  if (!board) return;
       if  (board.aimDragging) {
 	   var pos=getEventPosFromElement(board.canvas,e);
@@ -41,6 +44,8 @@
 	    if (i<board.balls.length) {
 		   board.ammoTiles[i].style.display='block';
 		   board.ammoTiles[i].style.background=buildAmmoGradient(board.balls[i]);
+		   unsetElementClass(board.ammoTiles[i],'fired');
+		   unsetElementClass(board.ammoTiles[i],'eject');
 		} else {
 		   board.ammoTiles[i].style.display='none';
 		}
@@ -67,10 +72,12 @@
    function moveAmmoBelt()
    {
       board.ammoDisplay.scrollLeft=board.ammoDisplay.scrollWidth-board.ammoDisplay.offsetWidth-board.ammoIndex*board.ammoTiles[0].offsetWidth;      	  
-   }
+   } 
    
    function spdDown(e)
    {     
+       e.preventDefault();
+       
 	   var pos=getEventPosFromElement(board.spddial,e);
 	   board.spdDragging=true;
        spdAt(pos.x,pos.y);
@@ -81,12 +88,14 @@
    
    function spdUp(e)
    {
+	 e.preventDefault();      
      board.spdDragging=false;
 	 return false;
    }
    
    function spdDrag(e)
    {
+	  e.preventDefault();       
       if  (board.spdDragging) {
 	    var pos=getEventPosFromElement(board.spddial,e);
 	    spdAt(pos.x,pos.y);	   

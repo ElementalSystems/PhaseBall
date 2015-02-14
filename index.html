@@ -1,14 +1,14 @@
 <html>
   <head>
     <title>Phase Ball</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <link href='http://fonts.googleapis.com/css?family=Fredericka+the+Great' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="plasmagun.css">
   </head>
-  <body onload="start()">
+  <body onload="start()" onresize="fitBoard()">
   
 <div id=editor>
-	<textarea id=levelCode rows=30 cols=30 oninput="fitBoard()">	{
+	<textarea id=levelCode rows=30 cols=30 oninput="editorUpdate()">	{
 	  "balls" :[ "r","r","w","w","b" ],
     "content":[
     {  "_init": "barrier",
@@ -35,22 +35,47 @@
 	Loading ... Please Wait
 	</div>
 	<img id=titlelogo src="image/title.png">
-	<div id=levelselector>	
+	<div id=levelselector class=overlay>	
+	  <div id=chapter0 class='chapter active'>
+	  <h1>Phaseball</h1>
+	  <a id=lev1link class=levlink href="javascript:void(0)" onclick="showChapter(1);">1 Schooling</a>
+	  <a id=lev1link class=levlink href="javascript:void(0)" onclick="showChapter(2);">2 Exploration</a>
+	  <a id=lev1link class=levlink href="javascript:void(0)" onclick="showChapter(3);">3 Challenge</a>
+	  <a id=lev1link class=levlink href="javascript:void(0)" onclick="showChapter(4);">4 Hardship</a>
+	</div>
+	<div id=chapter1 class='chapter'>
 	  <h1>Schooling</h1>
-	  <a id=lev1link class=levlink href='.\index.html?play=lev1'>1.1 Targets</a>
-	  <a id=lev1link class=levlink href='.\index.html?play=lev2'>1.2 Thread the Needle</a>
-	  <a id=lev1link class=levlink href='.\index.html?play=lev3'>1.3 Colour Phase</a>
-	  <a id=lev1link class=levlink href='.\index.html?play=lev4'>1.4 Colour Lore</a>
-	  <a id=lev1link class=levlink href='.\index.html?play=lev5'>1.5 Timing Matters</a>
-	  <a id=lev1link class=levlink href='.\index.html?play=lev6'>1.6 Cruise Control</a>
-	  <a id=lev1link class=levlink href='.\index.html?play=lev7'>1.7 Coloured Stripes</a>	  
+	  <a class=levlink href="javascript:void(0)" onclick="startLevel(11);">1.1 Targets</a>
+	  <a class=levlink href="javascript:void(0)" onclick="startLevel(12);">1.2 Thread the Needle</a>
+	  <a class=levlink  href="javascript:void(0)" onclick="startLevel(13);">1.3 Colour Phase</a>
+	  <a class=levlink  href="javascript:void(0)" onclick="startLevel(14);">1.4 Colour Lore</a>
+	  <a class=levlink  href="javascript:void(0)" onclick="startLevel(15);">1.5 Timing Matters</a>
+	  <a class=levlink  href="javascript:void(0)" onclick="startLevel(16);">1.6 Cruise Control</a>
+	  <a class=levlink  href="javascript:void(0)" onclick="startLevel(17);">1.7 Coloured Stripes</a>	  
+	  <a id=mainmenu href="javascript:void(0)" onclick="showChapter(0);">Main Menu</a>	  	  
+	</div>
+	<div id=chapter2 class='chapter'>
+	  <h1>Exporation</h1>
+	  <a id=lev1link class=levlink href="javascript:void(0)" onclick="startLevel(21);">2.1 The Cage</a>
+	  <a id=lev1link class=levlink href="javascript:void(0)" onclick="startLevel(22);">2.2 Locked Room</a>	  
+	  <a id=lev1link class=levlink href="javascript:void(0)" onclick="startLevel(23);">2.3 Grid Colours</a>	  
+	</div>
+	</div>
+	<div id=gamesummary class="overlay hidden">	
+	  <h2>Level Over</h2>
+	  <h2 id=gs_result>Completed with 4 Balls.</h2>
+	  <h2 id=gs_medal> You got a Gold Medal </h2>
+	  <h3 id=gs_nexttarget>Your previous best score is 3 (Gold Medal)</h3>
+	  <a id=replay  href="javascript:void(0)" onclick="startLevel(levNumber);">Replay Level</a>
+	  <a id=levmenu href="javascript:void(0)" onclick="showChapter(Math.floor(levNumber/10));">Level Menu</a>	  	  
+	  <a id=mainmenu href="javascript:void(0)" onclick="showChapter(0);">Main Menu</a>	  	  
 	</div>
 	<div id=playarea>	
 	<div id=boardarea>
 	<div id=overlay></div>	
 	<img src="image/gun.png" id=gun>
 	<div id=gamecanvasframe>
-	<canvas id=gamecanvas onmousedown="aimDown(event)" onmouseup="aimUp(event)"  onmousemove="aimDrag(event)" onmouseout="aimUp(event)"></canvas>
+	<canvas id=gamecanvas onmousedown="aimDown(event)" onmouseup="aimUp(event)"  onmousemove="aimDrag(event)" onmouseout="aimUp(event)" ontouchstart="aimDown(event)" ontouchend="aimUp(event)"  ontouchmove="aimDrag(event)" ontouchcancel="aimUp(event)"></canvas>
 	</div>
 	</div>
 <div id=ctlarea>
@@ -71,7 +96,7 @@
 </div>
 </div>
 <img onclick="fireGun()" id=firebutton src="image/firebutton.png">	
-<img id=spddial src="image/spddial.png" onmousedown="spdDown(event)" onmouseup="spdUp(event)"  onmousemove="spdDrag(event)" onmouseout="spdUp(event)">	
+<img id=spddial src="image/spddial.png" onmousedown="spdDown(event)" onmouseup="spdUp(event)"  onmousemove="spdDrag(event)" onmouseout="spdUp(event)" ontouchstart="spdDown(event)" ontouchend="spdUp(event)"  ontouchmove="spdDrag(event)" ontouchcancel="spdUp(event)">	
 <img id=spdneedle src="image/needle.png">	
 </div>
 </div>
@@ -79,9 +104,10 @@
 	
 <img src="image/back1.jpg" class=resource id=backdrop> 
 
-<div id=lev1 class=leveldef>
+<div id=lev11 class=leveldef>
 	{
 	  "balls" :[ "w","w","w","w","w","w","w" ],
+	  "medals":[ 1 ,2 ,4],
 	  "hints" :{
 	    "start": ["Aim the cannon in the bottom right by touching anywhere on the game board"],
 		"aim":  ["The idea is to hit all the rotating targets with a phase ball.","Press the Launch button in the bottom right corner to fire a Phase Ball"],
@@ -130,9 +156,10 @@
 }	
 </div>
 
-<div id=lev2 class=leveldef>
+<div id=lev12 class=leveldef>
 	{
-	  "balls" :[ "w","w","w","w","w","w","w" ],
+	  "balls" :[ "w","w","w","w","w","w" ],
+	  "medals":[ 1 ,2 ,4],
 	  "hints" :{
 	    "start": ["Use the barriers and edges to boune the plasma ball."],
 		"aim":  ["","Touch the playing area far from the gun for a more accurate aim.",""],
@@ -194,9 +221,11 @@
   ]
 }	
 </div>
-<div id=lev3 class=leveldef>
+<div id=lev13 class=leveldef>
 	{
 	  "balls" :[ "b","r","b","r","b","r"],
+	  "medals":[ 2 ,3 ,4],
+	  
 	  "hints" :{
 	    "start": ["Colours matter; red objects only interact with red objects; blue with blue."],
 		"aim":  ["So you can only hit blue targets with a blue ball",""],
@@ -226,9 +255,11 @@
   ]
 }	
 </div>
-<div id=lev4 class=leveldef>
+<div id=lev14 class=leveldef>
 	{
 	  "balls" :[ "r","b","w","r","b","w","r","b","w" ],
+	  "medals":[ 1 ,2 ,5],
+	  
 	  "hints" :{
 	    "start": ["Barriers can be coloured too!"],
 		"aim":  [""],
@@ -288,9 +319,11 @@
   ]
 }	
 </div>
-<div id=lev5 class=leveldef>
+<div id=lev15 class=leveldef>
 	{
-	  "balls" :[ "w","w","w","w","w" ],
+	  "balls" :[ "w","w","w","w","w","w" ],
+	  "medals":[ 1 ,2 ,4],
+	  
 	  "hints" :{
 	    "start": ["When you fire the ball can be important."],
 		"aim":  [""]
@@ -382,9 +415,10 @@
 }	
 </div>
 
-<div id=lev6 class=leveldef>
+<div id=lev16 class=leveldef>
 	{
 	  "balls" :[ "w","w","w","w","w","w","w","w" ],
+	  "medals":[ 1 ,2 ,4],	  
 	  "hints" :{
 	    "start": ["You can adjust the launch speed of the ball."],
 		"aim":  ["Touch anywhere on the speed dial around the launch button to set the speed."],
@@ -446,9 +480,10 @@
 }
 </div>
 
-<div id=lev7 class=leveldef>
+<div id=lev17 class=leveldef>
 	{
 	  "balls" :[ "brb","brb","brb","brb","brb","brb"],
+	  "medals":[ 1 ,2 ,4],	  
 	  "hints" :{
 	    "start": ["Some plasma balls change colour after they launch"],
 		"aim":  ["The speed of the launch will affect where the colour changes happen."],
@@ -491,6 +526,237 @@
 }		
 </div>
 
+<div id=lev21 class=leveldef>
+		{
+	  "balls" :[ "rbb","brr","rbb","brr","rbb","brr" ],
+    "medals":[2,3,4],
+    "content":[
+    {  "_init": "barrier",
+       "x1": 60,
+       "y1": 80,
+       "x2": 60,
+       "y2": 100,
+       "world": "blue"
+    },
+{  "_init": "barrier",
+       "x1": 80,
+       "y1": 60,
+       "x2": 100,
+       "y2": 60,
+       "world": "red"
+    },
+
+{  "_init": "barrier",
+       "x1": 60,
+       "y1": 20,
+       "x2": 20,
+       "y2": 60,
+       "world": "white"
+    },  {  "_init": "barrier",
+       "x1": 20,
+       "y1": 60,
+       "x2": 20,
+       "y2": 100,
+       "world": "red"
+    },
+{  "_init": "barrier",
+       "x1": 60,
+       "y1": 20,
+       "x2": 100,
+       "y2": 20,
+       "world": "blue"
+    },
+
+{  "_init": "barrier",
+       "x1": 80,
+       "y1": 60,
+       "x2": 60,
+       "y2": 80,
+       "world": "white"
+    },
+    
+	{  "_init": "target",
+       "x": 50,
+       "y": 50,
+       "world": "red"
+    },
+     {  "_init": "target",
+       "x": 90,
+       "y": 50,
+       "world": "blue"
+    },
+{  "_init": "target",
+       "x": 50,
+       "y": 10,
+       "world": "white"
+    },
+{  "_init": "target",
+       "x": 10,
+       "y": 50,
+       "world": "white"
+    }
+
+  ]
+}	
+</div>
+
+
+<div id=lev22 class=leveldef>
+	{
+	  "balls" :[  "wrbww","wbrww","b","r","b","r","b" ],
+    "medals":[1,2,4],
+    
+    "content":[
+    
+{  "_init": "barrier",
+       "x1": 60,
+       "y1": 20,
+       "x2": 60,
+       "y2": 60,
+       "world": "white"
+    },
+{  "_init": "barrier",
+       "x1": 20,
+       "y1": 60,
+       "x2": 60,
+       "y2": 60,
+       "world": "white"
+    },
+{  "_init": "barrier",
+       "x1": 20,
+       "y1": 20,
+       "x2": 40,
+       "y2": 20,
+       "world": "white"
+    },
+{  "_init": "barrier",
+       "x1": 20,
+       "y1": 20,
+       "x2": 20,
+       "y2": 40,
+       "world": "white"
+    },
+{  "_init": "barrier",
+       "x1": 20,
+       "y1": 40,
+       "x2": 20,
+       "y2": 60,
+       "world": "red"
+    }, 
+{  "_init": "barrier",
+       "x1": 40,
+       "y1": 20,
+       "x2": 60,
+       "y2": 20,
+       "world": "blue"
+    },
+
+{  "_init": "barrier",
+       "x1": 15, 
+       "y1": 0,
+       "x2": 0,
+       "y2": 20,
+       "world": "blue"
+    },  
+     
+	{  "_init": "target",
+       "x": 30,
+       "y": 10,
+       "world": "white"
+    },
+   
+	{  "_init": "target",
+       "x": 40,
+       "y": 40,
+       "world": "white"
+    },
+  
+	{  "_init": "target",
+       "x": 10,
+       "y": 30,
+       "world": "white"
+    }
+
+  ]
+}	
+</div>
+
+<div id=lev23 class=leveldef>
+		{
+	  "balls" :[ "rbbr","rbbr","rbb","bbr","rbb","bbr","rbb","bbr","rbb","bbr" ],
+	  "medals":[1,2,4],
+    
+    "content":[
+    {  "_init": "barrier",
+       "x1": 0,
+       "y1": 20,
+       "x2": 100,
+       "y2": 20,
+       "world": "blue"
+    },
+    {  "_init": "barrier",
+       "x1": 0,
+       "y1": 40,
+       "x2": 100,
+       "y2": 40,
+       "world": "blue"
+    },
+    {  "_init": "barrier",
+       "x1": 0,
+       "y1": 60,
+       "x2": 100,
+       "y2": 60,
+       "world": "blue"
+    },
+
+    {  "_init": "barrier",
+       "x1": 20,
+       "y1": 0,
+       "x2": 20,
+       "y2": 100,
+       "world": "red"
+    },
+    {  "_init": "barrier",
+       "x1": 40,
+       "y1": 0,
+       "x2": 40,
+       "y2": 100,
+       "world": "red"
+    },
+    {  "_init": "barrier",
+       "x1": 60,
+       "y1": 0,
+       "x2": 60,
+       "y2": 100,
+       "world": "red"
+    },
+
+    
+	{  "_init": "target",
+       "x": 30,
+       "y": 10,
+       "world": "white"
+    },
+{  "_init": "target",
+       "x": 10,
+       "y": 50,
+       "world": "white"
+    },
+{  "_init": "target",
+       "x": 50,
+       "y": 10,
+       "world": "white"
+    },
+{  "_init": "target",
+       "x": 10,
+       "y": 30,
+       "world": "white"
+    }
+
+
+  ]
+}	
+</div>
 
   </body>
    
@@ -498,7 +764,6 @@
   <script src="game.js"></script>  
   <script src="hints.js"></script>  
   <script src="control.js"></script>  
-  <script src="controls.js"></script>  
   <script src="gamestatics.js"></script>  
   <script src="animator.js"></script>  
   <script src="ball.js"></script>  
