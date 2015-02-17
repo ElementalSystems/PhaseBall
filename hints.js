@@ -1,8 +1,15 @@
 function fireHintEvent(type)
 {
+    if (type=='kill') {
+	  board.hinttext.innerHTML="";
+	  setElementClass(board.hinttext,'hidden');	
+	  return;
+	}		
 	if (!board.hints) return;
+
 	var textlist=board.hints[type];
 	if (textlist == undefined) return; //no such list exists
+
 	var text=textlist[0];
 	if (textlist.length>1)  //remove the first element
         textlist.shift();		

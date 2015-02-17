@@ -62,7 +62,7 @@
  	   unsetElementClass(document.getElementById('chapter0'),'active');
 	   unsetElementClass(document.getElementById('chapter1'),'active');
 	   unsetElementClass(document.getElementById('chapter2'),'active');
-	   //unsetElementClass(document.getElementById('chapter3'),'active');
+	   unsetElementClass(document.getElementById('chapter3'),'active');
 	   //unsetElementClass(document.getElementById('chapter4'),'active');
 	   setElementClass(document.getElementById('chapter'+num),'active');	   
 	   unsetElementClass(document.getElementById('levelselector'),'hidden');	  
@@ -150,10 +150,11 @@
 	  board.ctx.drawImage(board.backdropSource,0,0,canvasSize,canvasSize);
 	  board.ctx.globalAlpha=1;
 	
-	  for (var i=0;i<board.content.length;i+=1) {
+	  for (var i=0;i<board.content.length;i+=1) 
 	    board.content[i].draw();
-	  }	
+	  
 	  if (board.ended) {
+		fireHintEvent('kill');
 		showGameSummary();	  
 		board=null;
 	  }
@@ -163,24 +164,40 @@
 
 function showGameSummary()
 {
-	unsetElementClass(document.getElementById('gamesummary'),'hidden');
-	if (board.targetCount==board.targetHit)
+	var newCoding=0;
+    unsetElementClass(document.getElementById('gamesummary'),'hidden');
+	if (board.targetCount==board.targetHit) {
 	  document.getElementById('gs_result').innerHTML='Complete: '+board.ammoIndex+' Ball(s)';
+	  newCoding=1;
+	}
     else
 	  document.getElementById('gs_result').innerHTML='Failed. Try Again.';
   
     var medal='none';
 	var next='Use '+board.medals[2]+' ball(s) for a Bronze Medal';
-    if (board.ammoIndex<=board.medals[0]) {
+	if (board.ammoIndex<=board.medals[0]) {
 		medal='Gold';
 		next='';
+		newCoding=4;
 	} else if (board.ammoIndex<=board.medals[1]) {
 		medal='Silver';
 		next='Use '+board.medals[0]+' ball(s) for a Gold Medal';
+		newCoding=3;
 	} else if (board.ammoIndex<=board.medals[2]){
 		medal='Bronze';
 		next='Use '+board.medals[1]+' ball(s) for a Silver Medal';
+		newCoding=2;
 	}
+	
+	var best=parseInt(localStorage.getItem('balls'+levNumber));
+	if (isNaN(best)) best=1000;
+	if (board.AmmoIndex<best) 
+		localStorage.setItem('balls'+levNumber,board.AmmoIndex);
+	
+	var currentCoding=parseInt(localStorage.getItem('levcoding'+levNumber));
+	if (isNaN(currentCoding)) best=1000;
+	if (newCoding>currentCoding)
+	   localStorage.setItem('levcoding'+levNumber,newCoding);
 	
 	document.getElementById('gs_medal').innerHTML='Medal: '+medal;
 	document.getElementById('gs_nexttarget').innerHTML=next;			

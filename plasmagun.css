@@ -216,6 +216,11 @@ width: 20%;
   right: 0;
 }
 
+#titlelogoh
+{
+  z-index:3000;  
+  width:100%;
+}
 
 @-webkit-keyframes hintflash {
     0%   {opacity: 1;}
@@ -276,9 +281,36 @@ width: 20%;
 
 }
 
-.chapter{
-  display: none;
+.chapter {
+  display:none;
+  
 }
+
 .chapter.active {
+  display:block;
+  
+}
+
+#credits a {
+  display:inline;
+  color: #200;
+  
+}
+
+#credits {
+  font-size: 90%;
+  color: #500;
+  margin-left: 2em;
+  margin-top: 5em;
+}
+
+a.chaplink {
+  font-size: 150%;
+  border-bottom: 3px ridge #F99;
+}
+
+a.chaplink  span.subdesc {
+  font-size:60%;
+  margin-left:5em;
   display:block;
 }
