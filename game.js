@@ -10,18 +10,20 @@
    
    function start()
    {
-	  fitBoard();
+	   
+	  unsetElementClass(document.getElementById('playarea'),'hidden');	  
+ 	  fitBoard();
 	  setElementClass(document.getElementById('hinttext'),'hidden');	  
- 	
+ 	  
 	   var edit=getUrlVars()["edit"];
 	   if (edit) {
 		 editMode=1;
 	     document.getElementById("editor").style.display = "block";
 		 content=document.getElementById("levelCode").value;
 		 updateBoard(content);
-	   }
-	   
+	   }	  
       window.requestAnimationFrame(gameTick);	
+	  showChapter(0);
    }
    
    function fitBoard()
@@ -41,8 +43,11 @@
 	   document.getElementById('titlelogo').style.right=(size+(window.innerWidth-size)/2)+'px';	   	
    }
    
-   function startLevel(levN)
+   function startLevel(levEl)
    {
+	  
+	  var levN=levEl.getAttribute('data-lev');
+	  ga('send', 'event', 'StartLevel'+levN);
 	  levNumber=levN;
       content=document.getElementById('lev'+levNumber).innerHTML;
 	  if (editMode) 
@@ -56,6 +61,9 @@
 	  updateBoard(content);   
    }
    
+   
+   var medal_name=["never","none","Bronze","Silver","Gold"];
+   
    function showChapter(num)
    {
 	   setElementClass(document.getElementById('gamesummary'),'hidden');	  
@@ -64,9 +72,22 @@
 	   unsetElementClass(document.getElementById('chapter2'),'active');
 	   unsetElementClass(document.getElementById('chapter3'),'active');
 	   //unsetElementClass(document.getElementById('chapter4'),'active');
-	   setElementClass(document.getElementById('chapter'+num),'active');	   
-	   unsetElementClass(document.getElementById('levelselector'),'hidden');	  
- 	   
+	   var chapterE=document.getElementById('chapter'+num);
+	   setElementClass(chapterE,'active');	   
+	   var links=chapterE.getElementsByClassName('levlink');
+	   for (var i=0;i<links.length;i+=1) {
+		   var link=links[i];
+		   unsetElementClass(link,'Gold');
+		   unsetElementClass(link,'Silver');
+		   unsetElementClass(link,'Bronze');
+		   unsetElementClass(link,'none');
+		   var levN=link.getAttribute('data-lev');
+		   var lev=parseInt(localStorage.getItem('levcoding'+levN));
+		   if (lev>0)
+		     setElementClass(link,medal_name[lev]);		   
+	   }
+	   
+	   unsetElementClass(document.getElementById('levelselector'),'hidden');	   	   
    }
    
    function updateBoard(content)
@@ -173,6 +194,12 @@ function showGameSummary()
     else
 	  document.getElementById('gs_result').innerHTML='Failed. Try Again.';
   
+    var best=parseInt(localStorage.getItem('balls'+levNumber));	
+	if (isNaN(best)) best=9999;
+	
+	var currentCoding=parseInt(localStorage.getItem('levcoding'+levNumber));
+	if (isNaN(currentCoding)) currentCoding=0;
+	
     var medal='none';
 	var next='Use '+board.medals[2]+' ball(s) for a Bronze Medal';
 	if (board.ammoIndex<=board.medals[0]) {
@@ -188,18 +215,22 @@ function showGameSummary()
 		next='Use '+board.medals[1]+' ball(s) for a Silver Medal';
 		newCoding=2;
 	}
+	if (best<100)
+	  next=next+"<p/> Previous Best: "+best+" ball(s)."
+	if (board.ammoIndex<best) 
+		localStorage.setItem('balls'+levNumber,board.ammoIndex);
 	
-	var best=parseInt(localStorage.getItem('balls'+levNumber));
-	if (isNaN(best)) best=1000;
-	if (board.AmmoIndex<best) 
-		localStorage.setItem('balls'+levNumber,board.AmmoIndex);
-	
-	var currentCoding=parseInt(localStorage.getItem('levcoding'+levNumber));
-	if (isNaN(currentCoding)) best=1000;
 	if (newCoding>currentCoding)
 	   localStorage.setItem('levcoding'+levNumber,newCoding);
 	
-	document.getElementById('gs_medal').innerHTML='Medal: '+medal;
+	var medalE=document.getElementById('gs_medal');
+	medalE.innerHTML='Medal: '+medal;
+	unsetElementClass(medalE,'Gold');
+	unsetElementClass(medalE,'Silver');
+	unsetElementClass(medalE,'Bronze');
+	unsetElementClass(medalE,'none');
+	setElementClass(medalE,medal);
+		
 	document.getElementById('gs_nexttarget').innerHTML=next;			
 }
    

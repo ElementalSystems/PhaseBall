@@ -27,6 +27,12 @@ overflow:hidden;
   height: 100%;
 }
 
+#playarea.hidden{
+  display:none;
+}
+
+
+
 #overlay
 {
   position: absolute;
@@ -84,6 +90,8 @@ overflow:hidden;
   bottom:-12%;
   right:-3%;
   z-index:1000;
+  max-height:6em;
+  
 }
 
 #firebutton.inprogress
@@ -96,6 +104,7 @@ overflow:hidden;
 
 #spddial {
   height:120%;
+  max-height:10em;
   position: absolute;
   bottom:10px;
   right:10px;
@@ -103,6 +112,7 @@ overflow:hidden;
 
 #spdneedle {
   height:20%;
+  max-height: 2em;
   position: absolute;
   bottom:0;
   right:0;
@@ -283,6 +293,7 @@ width: 20%;
 
 .chapter {
   display:none;
+  display:none;
   
 }
 
@@ -314,3 +325,43 @@ a.chaplink  span.subdesc {
   margin-left:5em;
   display:block;
 }
+
+#gs_medal {
+  background-repeat: no-repeat;
+  background-position: left;
+   background-size: auto 100%;
+}
+
+.Gold {
+  background-image: url("image/goldmedal.png");
+}
+
+.Silver {
+  background-image: url("image/silvermedal.png");
+}
+
+.Bronze {
+  background-image: url("image/bronzemedal.png");
+}
+
+.none {
+  background-image: url("image/nomedal.png");
+}
+
+#gamesummary h2
+{
+padding-left:1.5em;
+}
+
+#gamesummary h3
+{
+padding-left:1.5em;
+margin-top:1em;
+}
+
+.overlay a.levlink {
+   background-repeat: no-repeat;
+   background-position: left;
+   background-size: auto 100%;
+   padding-left: 2em;
+ }
