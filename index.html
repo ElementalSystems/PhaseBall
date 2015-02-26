@@ -100,11 +100,11 @@
 	  <a id=lev1link class=levlink href="javascript:void(0)" data-lev=32 onclick="startLevel(this);">3.2 Speed Limit</a>	  
 	  <a id=lev1link class=levlink href="javascript:void(0)" data-lev=33 onclick="startLevel(this);">3.3 Snake</a>	  
 	  <a id=lev1link class=levlink href="javascript:void(0)" data-lev=34 onclick="startLevel(this);">3.4 Long Way Round</a>	  
-	  <a id=lev1link class=levlink href="javascript:void(0)" data-lev=35 onclick="startLevel(this);">3.5 ???</a>	  
+	  <a id=lev1link class=levlink href="javascript:void(0)" data-lev=35 onclick="startLevel(this);">3.5 The Squeeze</a>	  
 	  <a id=lev1link class=levlink href="javascript:void(0)" data-lev=36 onclick="startLevel(this);">3.6 Phase Grid</a>	  
 	  <a id=lev1link class=levlink href="javascript:void(0)" data-lev=37 onclick="startLevel(this);">3.7 We Are Legion</a>	  
-	  <a id=lev1link class=levlink href="javascript:void(0)" data-lev=38 onclick="startLevel(this);">3.8 ???</a>	  
-	  <a id=lev1link class=levlink href="javascript:void(0)" data-lev=39 onclick="startLevel(this);">3.9 ???</a>	  
+	  <a id=lev1link class=levlink href="javascript:void(0)" data-lev=38 onclick="startLevel(this);">3.8 Cellular</a>	  
+	  <a id=lev1link class=levlink href="javascript:void(0)" data-lev=39 onclick="startLevel(this);">3.9 Tic-Tac-Toe</a>	  
 	  <p/>
 	  <a id=mainmenu href="javascript:void(0)" onclick="showChapter(0);">Main Menu</a>	  	  
 	</div>
@@ -114,8 +114,8 @@
 	  <h2 id=gs_result>Completed with 4 Balls.</h2>
 	  <h2 id=gs_medal > You got a Gold Medal </h2>
 	  <h3 id=gs_nexttarget>Your previous best score is 3 (Gold Medal)</h3>
-	  <a id=replay  href="javascript:void(0)" onclick="startLevel(levNumber);">Replay Level</a>
-	  <a id=levmenu href="javascript:void(0)" onclick="showChapter(Math.floor(levNumber/10));">Level Menu</a>	  	  
+	  <a id=replay  href="javascript:void(0)" onclick="startCurrentLevel();">Replay Level</a>
+	  <a id=levmenu href="javascript:void(0)" onclick="showChapter(Math.floor(levNumber/10));">Next Level</a>	  	  
 	  <a id=mainmenu href="javascript:void(0)" onclick="showChapter(0);">Main Menu</a>	  	  
 	</div>
 	<div id=playarea class="hidden">	
@@ -1885,6 +1885,76 @@
   ]
 }	
 </div>
+<div id=lev35 class=leveldef>
+	{
+	  "balls" :[ "wwr","wwr","wwr","wwr","wwr","wwr" ],
+"medals":[1,2,3],
+    "content":[ 
+{  "_init": "barrier",
+       "x1": 35,
+       "y1": 20,
+       "x2": 75,
+       "y2": 20,
+       "world": "blue"
+    },
+    {  "_init": "barrier",
+       "x1": 35,
+       "y1": 20,
+       "x2": 75,
+       "y2": 60,
+       "world": "blue"
+    },
+    {  "_init": "barrier",
+       "x1": 75,
+       "y1": 20,
+       "x2": 75,
+       "y2": 60,
+       "world": "blue"
+    },
+
+    {  "_init": "barrier",
+       "x1": 25,
+       "y1": 30,
+       "x2": 25,
+       "y2": 70,
+       "world": "blue"
+    },
+    {  "_init": "barrier",
+       "x1": 25,
+       "y1": 30,
+       "x2": 65,
+       "y2": 70,
+       "world": "blue"
+    },
+    {  "_init": "barrier",
+       "x1": 25,
+       "y1": 70,
+       "x2": 65,
+       "y2": 70,
+       "world": "blue"
+    },
+
+     
+	{  "_init": "target",
+       "x": 10,
+       "y": 30,
+       "world": "white"
+    },
+{  "_init": "target",
+       "x": 60,
+       "y": 30,
+       "world": "white"
+    },
+{  "_init": "target",
+       "x": 35,
+       "y": 60,
+       "world": "white"
+    }
+
+
+  ]
+}	
+</div>
 <div id=lev36 class=leveldef>
 	{
 	  "balls" :[ "rbbw","rbbw","rbbw","rbbw","rbbw","rbbw","rbbw","rbbw" ],
@@ -2088,6 +2158,361 @@
     }
   ]
 }	
+</div>
+<div id=lev38 class=leveldef>
+	{
+	  "balls" :[ "rbrbw","rbrbw","rbrbw","rbrbw","rbrbw","rbrbw","rbrbw","rbrbw" ],
+"medals": [2,3,5],
+    "content":[
+    
+    {  "_init": "barrier",
+       "x1": 40,
+       "y1": 20,
+       "x2": 20,
+       "y2": 40,
+       "world": "white"
+    },
+    {  "_init": "barrier",
+       "x1": 40,
+       "y1": 20,
+       "x2": 60,
+       "y2": 20,
+       "world": "white"
+    }, 
+    {  "_init": "barrier",
+       "x1": 60,
+       "y1": 20,
+       "x2": 60,
+       "y2": 40,
+       "world": "white"
+    }, 
+    {  "_init": "barrier",
+       "x1": 60,
+       "y1": 40,
+       "x2": 40,
+       "y2": 60,
+       "flashpattern": {
+	 "on": 2000, 
+	 "off":1000,
+	 "offset": 0	},
+
+       "world": "white"
+    }, 
+    
+    {  "_init": "barrier",
+       "x1": 20,
+       "y1": 60,
+       "x2": 40,
+       "y2": 60,
+       "world": "white"
+    }, 
+    
+    {  "_init": "barrier",
+       "x1": 20,
+       "y1": 40,
+       "x2": 20,
+       "y2": 60,
+       "world": "white"
+    }, 
+    {  "_init": "barrier",
+       "x1": 60,
+       "y1": 20,
+       "x2": 40,
+       "y2": 40,
+       "world": "blue"
+    }, 
+    {  "_init": "barrier",
+       "x1": 60,
+       "y1": 20,
+       "x2": 80,
+       "y2": 20,
+       "world": "blue"
+    }, 
+    {  "_init": "barrier",
+       "x1": 80,
+       "y1": 20,
+       "x2": 80,
+       "y2": 40,
+       "world": "blue"
+    }, 
+    {  "_init": "barrier",
+       "x1": 80,
+       "y1": 40,
+       "x2": 60,
+       "y2": 60,
+       "world": "blue"
+    }, 
+    
+    {  "_init": "barrier",
+       "x1": 40,
+       "y1": 60,
+       "x2": 60,
+       "y2": 60,
+       "world": "blue"
+    }, 
+    
+    {  "_init": "barrier",
+       "x1": 40,
+       "y1": 40,
+       "x2": 40,
+       "y2": 60,
+       "world": "blue"
+    }, 
+    {  "_init": "barrier",
+       "x1": 40,
+       "y1": 40,
+       "x2": 20,
+       "y2": 60,
+       "world": "red"
+    }, 
+    {  "_init": "barrier",
+       "x1": 40,
+       "y1": 40,
+       "x2": 60,
+       "y2": 40,
+       "world": "red"
+    }, 
+    {  "_init": "barrier",
+       "x1": 60,
+       "y1": 40,
+       "x2": 60,
+       "y2": 60,
+       "world": "red"
+    }, 
+    {  "_init": "barrier",
+       "x1": 60,
+       "y1": 60,
+       "x2": 40,
+       "y2": 80,
+       "world": "red"
+    }, 
+    
+    {  "_init": "barrier",
+       "x1": 20,
+       "y1": 80,
+       "x2": 40,
+       "y2": 80,
+       "world": "red"
+    }, 
+    
+    {  "_init": "barrier",
+       "x1": 20,
+       "y1": 60,
+       "x2": 20,
+       "y2": 80,
+       "world": "red"
+    }, 
+    
+    
+    
+	{  "_init": "target",
+       "x": 35,
+       "y": 35,
+       "world": "white"
+    },
+	{  "_init": "target",
+       "x": 20,
+       "y": 20,
+       "world": "white"
+    },
+	{  "_init": "target",
+       "x": 70,
+       "y": 30,
+       "world": "white"
+    },
+
+{  "_init": "target",
+       "x": 30,
+       "y": 70,
+       "world": "white"
+    }
+
+
+  ]
+}	
+</div>
+<div id=lev39 class=leveldef>
+
+	
+
+	
+
+	{
+	  "balls" :[  "wbrbw","wbrbw","wbrbw","wbrbw","wbrbw","wbrbw","wbrbw","wbrbw","wbrbw","wbrbw" ],
+    "medals":[2,4,5],
+    
+    "content":[
+    
+{  "_init": "barrier",
+       "x1": 60,
+       "y1": 40,
+       "x2": 40,
+       "y2": 60,
+       "flashpattern": {
+	 "on": 1000, 
+	 "off":1000,
+	 "offset": 0	},
+
+       "world": "white"
+    },
+ 
+{  "_init": "barrier",
+       "x1": 20,
+       "y1": 40,
+       "x2": 40,
+       "y2": 60,
+       "flashpattern": {
+	 "on": 1000, 
+	 "off":1000,
+	 "offset": 1000	},
+
+       "world": "white"
+    },
+
+{  "_init": "barrier",
+       "x1": 20,
+       "y1": 40,
+       "x2": 40,
+       "y2": 20,
+       "flashpattern": {
+	 "on": 1000, 
+	 "off":1000,
+	 "offset": 0	},
+
+       "world": "white"
+    },
+
+{  "_init": "barrier",
+       "x1": 40,
+       "y1": 20,
+       "x2": 60,
+       "y2": 40,
+       "flashpattern": {
+	 "on": 1000, 
+	 "off":1000,
+	 "offset": 1000	},
+
+       "world": "white"
+    },
+
+{  "_init": "barrier",
+       "x1": 40,
+       "y1": 60,
+       "x2": 20,
+       "y2": 80,
+       "world": "white"
+    },
+
+{  "_init": "barrier",
+       "x1": 60,
+       "y1": 40,
+       "x2": 80,
+       "y2": 20,
+       "world": "white"
+    },
+
+
+{  "_init": "barrier",
+       "x1": 0,
+       "y1": 60,
+       "x2": 20,
+       "y2": 40,
+       "world": "white"
+    },
+{  "_init": "barrier",
+       "x1": 40,
+       "y1": 20,
+       "x2": 60,
+       "y2": 0,
+       "world": "white"
+    },
+
+{  "_init": "barrier",
+       "x1": 0,
+       "y1": 20,
+       "x2": 20,
+       "y2": 40,
+       "world": "white"
+    },
+
+{  "_init": "barrier",
+       "x1": 20,
+       "y1": 0,
+       "x2": 40,
+       "y2": 20,
+       "world": "white"
+    },
+{  "_init": "barrier",
+       "x1": 60,
+       "y1": 40,
+       "x2": 80,
+       "y2": 60,
+       "world": "white"
+    },
+{  "_init": "barrier",
+       "x1": 40,
+       "y1": 60,
+       "x2": 60,
+       "y2": 80,
+       "world": "white"
+    },
+
+
+{  "_init": "barrier",
+       "x1": 40,
+       "y1": 20,
+       "x2": 40,
+       "y2": 60,
+       "world": "red"
+    }, 
+{  "_init": "barrier",
+       "x1": 20,
+       "y1": 40,
+       "x2": 60,
+       "y2": 40,
+       "world": "blue"
+    },
+
+{  "_init": "barrier",
+       "x1": 60, 
+       "y1": 0,
+       "x2": 80,
+       "y2": 20,
+       "world": "blue"
+    },  
+     
+
+{  "_init": "barrier",
+       "x1": 0, 
+       "y1": 60,
+       "x2": 20,
+       "y2": 80,
+       "world": "blue"
+    },  
+	{  "_init": "target",
+       "x": 60,
+       "y": 20,
+       "world": "white"
+    },
+   
+	{  "_init": "target",
+       "x": 20,
+       "y": 20,
+       "world": "white"
+    },
+  
+	{  "_init": "target",
+       "x": 20,
+       "y": 60,
+       "world": "white"
+    }
+
+
+  ]
+}	
+
+
+
 </div>
 
   </body>

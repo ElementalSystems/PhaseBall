@@ -47,9 +47,16 @@
    {
 	  
 	  var levN=levEl.getAttribute('data-lev');
-	  ga('send', 'event', 'StartLevel'+levN);
 	  levNumber=levN;
-      content=document.getElementById('lev'+levNumber).innerHTML;
+	  startCurrentLevel();      
+   }
+   
+   
+   function startCurrentLevel()
+   {
+	  
+	  ga('send', 'event', 'StartLevel'+levNumber);
+	  content=document.getElementById('lev'+levNumber).innerHTML;
 	  if (editMode) 
 		  document.getElementById("levelCode").innerHTML=content;	  
 	  updateBoard(content);   

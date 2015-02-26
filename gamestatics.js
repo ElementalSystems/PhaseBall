@@ -136,15 +136,14 @@ function drawBarrier()
 function tickBarrier()
 {
 	if ((this.flashpattern)&&(board.worldTime>this.nextPattern)) {
-		if (this.nextPattern==0) this.nextPattern=board.worldTime+this.flashpattern.offset+this.flashpattern.on;
-		else {
-			if (this.active) {
-				this.active=false;
-				this.nextPattern=board.worldTime+this.flashpattern.off;
-			} else {
-				this.active=true;
-				this.nextPattern=board.worldTime+this.flashpattern.on;
-			}  						
-		}		
-	}	
+		var ctime=(board.worldTime+this.flashpattern.offset)%(this.flashpattern.off+this.flashpattern.on);
+		isOn=(ctime<this.flashpattern.on);
+		if (isOn) {
+			this.active=true;
+			this.nextPattern=board.worldTime-ctime+this.flashpattern.on;			
+		} else {
+			this.active=false;
+		    this.nextPattern=board.worldTime-ctime+this.flashpattern.on+this.flashpattern.off;			
+		}
+	}
 }

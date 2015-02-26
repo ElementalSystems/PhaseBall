@@ -97,8 +97,8 @@ overflow:hidden;
 #firebutton.inprogress
 {
    pointer-events: none;  
-   -webkit-animation: launchflash .5s infinite alternate;
-   animation: launchflash .5s infinite alternate;
+   -webkit-animation: launchflash 5s infinite alternate;
+   animation: launchflash 5s infinite alternate;
 }
 
 
@@ -233,44 +233,39 @@ width: 20%;
 }
 
 @-webkit-keyframes hintflash {
-    0%   {opacity: 1;}
-    80%   {opacity: .9;}
-    100% {opacity:0.5;}
+    0%   {background: rgba(0,0,0,1);}
+    100% {background: rgba(0,0,0,0.3);}
 }
 
 @keyframes hintflash {
-    0%   {opacity: 1;}
-    80%   {opacity: .9;}
-    100% {opacity:0.5;}
+    0%   {background: rgba(0,0,0,1);}
+    100% {background: rgba(0,0,0,0.3);}
 }
 
 
 @-webkit-keyframes launchflash {
-    0%   {opacity: .9;}
-    100% {opacity:0;}
+    0%   { -webkit-transform: scale(1) rotate(0deg);}
+    100% { -webkit-transform: scale(.5) rotate(360deg);}
 }
 
 @keyframes launchflash {
-    0%   {opacity: .9;}
-    100% {opacity:0;}
+    0%   {transform: scale(1) rotate(0deg);}
+    100% {transform: scale(.5) rotate(360deg);}
 }
 
 #hinttext
 {
-  background: #00F;
+  background: #000;
   font-size:300%;
   text-align: center;
   padding-top: 75px;
   padding-bottom: 25px;
+  color: #FFF;
   
   top: -50px;
-  left: 5%;
   position: absolute;
-  background-image: url("image/menuback.jpg");
-  background-size: 100% 100%;
-  width: 90%;
+  width: 100%;
   z-index: 3100;
-  border-radius: 50px;
   transition: top 1s;
 
    -webkit-animation: hintflash 2s linear infinite alternate;
@@ -278,9 +273,11 @@ width: 20%;
 }
 
 #hinttext.hint {
-    font-size: 150%;
+    font-size: 110%;
+	font-weight:bold;
 	padding-top: 50px;
     padding-bottom: 5px;
+	
   
 }
 
